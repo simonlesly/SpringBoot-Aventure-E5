@@ -1,4 +1,7 @@
-package com.example.springaventure.models.dao
+package com.example.springaventure.model.dao
 
-interface QualiteDAO {
+import com.example.springaventure.model.entity.Qualite
+import org.springframework.data.jpa.repository.JpaRepository
+
+interface QualiteDAO :JpaRepository<Qualite,Long> {
 }

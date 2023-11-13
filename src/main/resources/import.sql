@@ -1,0 +1,1 @@
+insert into qualite (bonus_qualite, couleur, nom) values (0,'grey','commun'),(1,'blue','rare'),(2,'pink','epique'),(3,'orange','légendaire');

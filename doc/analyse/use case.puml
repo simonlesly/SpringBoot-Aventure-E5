@@ -1,0 +1,29 @@
+@startuml SpringAventure
+
+!define ADMIN << (A,#FF7700) Admin >>
+!define JOUEUR << (J,#0077FF) Joueur >>
+!define VISITEUR << (V,#00FF00) Visiteur >>
+
+actor Visiteur as VIS
+actor Joueur as JOU
+actor Admin as ADM
+
+rectangle "SpringAventure" {
+  VIS --> (S'inscrire)
+  VIS --> (S'authentifier)
+  VIS --> (Consulter pages publiques)
+
+  JOU --> (Créer partie)
+  JOU --> (Créer personnage)
+  JOU --> (Gérer campagnes)
+  JOU --> (Jouer/Reprendre campagne)
+
+  ADM --> (Gérer qualités)
+  ADM --> (Gérer armes)
+  ADM --> (Gérer armures)
+  ADM --> (Gérer Items)
+  ADM --> (Gérer personnages)
+  ADM --> (Gérer utilisateurs)
+}
+
+@enduml
