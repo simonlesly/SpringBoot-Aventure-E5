@@ -11,6 +11,7 @@ class Qualite constructor(
     var nom:String,
     var couleur:String,
     var bonusQualite:Int
+    //TODO Mission 3 Ajouter les associations
 ) {
 
 
