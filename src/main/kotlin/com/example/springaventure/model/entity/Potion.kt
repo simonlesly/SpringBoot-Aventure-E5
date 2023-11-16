@@ -17,9 +17,12 @@ class Potion(
 
     // La description de la potion
     description: String,
+    //Chemin ver l'image
+    cheminImage:String?,
 
     // La propriété spécifique à la potion, le soin qu'elle procure
     val soin: Int
-) : Item(id, nom, description) {
+
+) : Item(id, nom, description,cheminImage) {
     // TODO Sprint 5 : méthode à implémenter pour la fonctionnalité "utiliser"
 }

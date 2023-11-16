@@ -19,7 +19,9 @@ open abstract class Item constructor(
     // Nom de l'item
     var nom: String,
     // Description de l'item
-    var description: String
+    var description: String,
+    //Chemin vers l'image de l'item
+    var cheminImage:String?
 ) {
 // TODO sprint 5: methode utiliser
 }
