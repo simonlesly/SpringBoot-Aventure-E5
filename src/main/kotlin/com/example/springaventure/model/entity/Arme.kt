@@ -12,14 +12,17 @@ class Arme constructor(
     nom: String,
     description: String,
     cheminImage: String?,
-//TODO Attributs spécifiques aux armes
+
     //Association entre Arme et Qualite
     //Plusieurs armes peuvent être rataché a une qualite
     @ManyToOne
     @JoinColumn(name = "qualite_id")
     var qualite: Qualite? = null,
-    //TODO Faire l'association avec TypeArme
+    // Faire l'association avec TypeArme
 ) : Item(id, nom, description, cheminImage) {
+    @ManyToOne
+    @JoinColumn(name = "type_arme_id")
+    open var typeArme: TypeArme? = null
 
 
 }

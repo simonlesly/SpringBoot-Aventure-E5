@@ -1,0 +1,13 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<label for="qualite" class="form-label">Qualité</label>
+<select class="form-select" id="qualite" th:field="${nouvelleArme.qualite.id}">
+  <option th:each="uneQualite : ${qualites}" th:value="${uneQualite.id}" th:text="${uneQualite.nom}"></option>
+</select>
+</body>
+</html>
