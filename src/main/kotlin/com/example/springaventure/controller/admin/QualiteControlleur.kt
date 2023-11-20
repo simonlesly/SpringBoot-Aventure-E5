@@ -1,6 +1,6 @@
 package com.example.springaventure.controller.admin
 
-import com.example.springaventure.model.dao.QualiteDAO
+import com.example.springaventure.model.dao.QualiteDao
 import com.example.springaventure.model.entity.Qualite
 import org.springframework.stereotype.Controller
 import org.springframework.ui.Model
@@ -15,7 +15,7 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes
  * Contrôleur gérant les opérations liées aux qualités dans l'interface d'administration.
  */
 @Controller
-class QualiteControlleur(val qualiteDao: QualiteDAO) {
+class QualiteControlleur(val qualiteDao: QualiteDao) {
 
     /**
      * Affiche la liste de toutes les qualités.

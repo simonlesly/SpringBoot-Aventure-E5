@@ -1,6 +1,6 @@
 package com.example.springaventure.controller.admin
 
-import com.example.springaventure.model.dao.TypeArmeDAO
+import com.example.springaventure.model.dao.TypeArmeDao
 import com.example.springaventure.model.entity.TypeArme
 import org.springframework.stereotype.Controller
 import org.springframework.ui.Model
@@ -8,7 +8,7 @@ import org.springframework.web.bind.annotation.*
 import org.springframework.web.servlet.mvc.support.RedirectAttributes
 
 @Controller
-class TypeArmeControlleur(val typeArmeDao: TypeArmeDAO) {
+class TypeArmeControlleur(val typeArmeDao: TypeArmeDao) {
 
     @GetMapping("/admin/typearme")
     fun index(model: Model): String {

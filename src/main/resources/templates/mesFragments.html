@@ -30,8 +30,13 @@
                 <li class="nav-item">
                     <a class="nav-link" href="#">Inscription</a>
                 </li>
-                <li class="nav-item">
-                    <a class="nav-link" href="#">Login</a>
+                <li sec:authorize="isAnonymous()" class="nav-item">
+                    <a class="nav-link" href="/login">Login</a>
+                </li>
+                <li sec:authorize="isAuthenticated()" class="nav-item">
+                    <form action="/logout" method="post">
+                        <button class="btn btn-primary">Logout</button>
+                    </form>
                 </li>
                 <li class="nav-item dropdown">
                     <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
@@ -41,6 +46,10 @@
                         <li><a class="dropdown-item" href="#">Dashboard Qualite</a></li>
                         <li><a class="dropdown-item" href="#">Dashboard Type Arme</a></li>
                     </ul>
+                </li>
+                <li sec:authorize="isAuthenticated()" >
+                    Bienvenue <span  sec:authentication="name"></span>
+                    (<span sec:authentication="authorities[0]"></span>)
                 </li>
             </ul>
         </div>
