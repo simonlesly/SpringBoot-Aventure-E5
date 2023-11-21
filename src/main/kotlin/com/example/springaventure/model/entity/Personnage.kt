@@ -24,6 +24,8 @@ open class Personnage(
 
     val inventaire: MutableList<Item> = mutableListOf()
 ) {
+    @OneToMany(mappedBy = "personnage", cascade = [CascadeType.REMOVE], orphanRemoval = true)
+    open var combats: MutableList<Combat> = mutableListOf()
 
     fun calculeDefense(): Int {
         var resultat = this.defense / 2
