@@ -45,7 +45,7 @@ class Arme constructor(
         val deCritique = TirageDes(1, 20).lance()
         if (deCritique >= typeArme!!.limiteCritique) {
             // Coup critique (si le nombre tiré correspond au maximum)
-            println("Coup critique !")
+
             resultatLancer = resultatLancer * typeArme!!.mutiplicateurCritique
         }
         resultatLancer += this.qualite!!.bonusQualite

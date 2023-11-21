@@ -71,7 +71,8 @@ open class Personnage(
     }
 
     // Méthode pour boire une potion de l'inventaire
-    fun boirePotion() {
+    fun boirePotion():String {
+        //TODO refaire la logique de boire potion
         val potions = inventaire.filterIsInstance<Potion>()
         if (potions.isNotEmpty()) {
             val potion = potions.first()
@@ -81,9 +82,9 @@ open class Personnage(
                 pointDeVie = pointDeVieMax
             }
             inventaire.remove(potion)
-            println("$nom boit ${potion.nom} et récupère $soin points de vie.")
+            return ("$nom boit ${potion.nom} et récupère $soin points de vie.")
         } else {
-            println("$nom n'a pas de potion dans son inventaire.")
+            return ("$nom n'a pas de potion dans son inventaire.")
         }
     }
 
@@ -98,13 +99,15 @@ open class Personnage(
     /**
      * Loot l'inventaire de la cible
      */
-    fun loot(cible: Personnage) {
+    fun loot(cible: Personnage) :String{
         cible.armeEquipee = null
         cible.armureEquipee = null
         this.inventaire.addAll(cible.inventaire)
-        cible.inventaire.forEach({ println("${this.nom} récupère un/une $it") })
-        println()
+        var msg=""
+        cible.inventaire.forEach({ msg+=("${this.nom} récupère un/une $it\n") })
+
         cible.inventaire.clear()
+        return msg
     }
 
     /**

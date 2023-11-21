@@ -24,5 +24,14 @@ class Potion(
     val soin: Int
 
 ) : Item(id, nom, description,cheminImage) {
-    // TODO Sprint 5 : méthode à implémenter pour la fonctionnalité "utiliser"
+
+    /**
+     * Utilise la potion pour soigner un personnage en appelant la méthode boirePotion sur la cible.
+     *
+     * @param cible Le personnage sur lequel la potion est utilisée pour soigner.
+     */
+    override fun utiliser(cible: Personnage) {
+        //TODO Refaire la logique de boire potion
+        cible.boirePotion()
+    }
 }
