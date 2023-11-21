@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head th:replace="mesFragments :: fragHead">
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<div class="vh-100">
+    <nav th:replace="mesFragments :: fragNav"></nav>
+    <main class="container">
+        <h1>Combat</h1>
+        <div class="row row-cols-2 ">
+            <div class="card mx-auto" style="width: 18rem;">
+                <img src="..." class="card-img-top" alt="...">
+                <div class="card-body">
+                    <h5 class="card-title" th:text="${leCombat.campagne.hero.nom}">Card title</h5>
+                    <p th:text="${leCombat.campagne.hero.pointDeVie+'/'+leCombat.campagne.hero.pointDeVieMax}"></p>
+                    <div class="progress" role="progressbar" aria-label="vieHero">
+                        <div class="progress-bar" th:style="'width:'+${leCombat.campagne.hero.pointDeVie/(leCombat.campagne.hero.pointDeVieMax/100)}+'%'"></div>
+                    </div>
+
+                </div>
+                <ul class="list-group list-group-flush">
+                    <li class="list-group-item" >An item</li>
+                    <li class="list-group-item">A second item</li>
+                    <li class="list-group-item">A third item</li>
+                </ul>
+                <div class="card-body">
+                    <a href="#" class="card-link">Card link</a>
+                    <a href="#" class="card-link">Another link</a>
+                </div>
+            </div>
+
+            <div class="card mx-auto" style="width: 18rem;">
+                <img src="..." class="card-img-top" alt="...">
+                <div class="card-body">
+                    <h5 class="card-title" th:text="${leCombat.monstre.nom}">Card title</h5>
+                    <p th:text="${leCombat.monstre.pointDeVie+'/'+leCombat.monstre.pointDeVieMax}"></p>
+                    <div class="progress" role="progressbar" aria-label="vieHero">
+                        <div class="progress-bar" th:style="'width:'+${leCombat.monstre.pointDeVie/(leCombat.monstre.pointDeVieMax/100)}+'%'"></div>
+                    </div>
+
+                </div>
+                <ul class="list-group list-group-flush">
+                    <li class="list-group-item" >An item</li>
+                    <li class="list-group-item">A second item</li>
+                    <li class="list-group-item">A third item</li>
+                </ul>
+                <div class="card-body">
+                    <a href="#" class="card-link">Card link</a>
+                    <a href="#" class="card-link">Another link</a>
+                </div>
+            </div>
+        </div>
+    </main>
+</div>
+<footer th:replace="mesFragments :: fragFooter"></footer>
+</body>
+</html>

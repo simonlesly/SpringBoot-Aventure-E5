@@ -18,15 +18,15 @@ class Armure(
 ) :
     Item(id, nom, description, cheminImage) {
     @OneToMany(mappedBy = "armureEquipee")
-    open var personnages: MutableList<Personnage> = mutableListOf()
+     var personnages: MutableList<Personnage> = mutableListOf()
 
     /**
      * Équipe l'armure sur un personnage, permettant au personnage d'augmenter sa défense.
      *
      * @param cible Le personnage sur lequel l'armure est équipée.
      */
-    override fun utiliser(cible: Personnage) {
-        cible.equipe(this)
+    override fun utiliser(cible: Personnage):String {
+      return  cible.equipe(this)
     }
 
     /**

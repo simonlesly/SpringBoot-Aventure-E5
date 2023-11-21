@@ -8,7 +8,6 @@ import jakarta.persistence.*
 
 // Déclare la classe comme une entité JPA
 @Entity
-
 // Déclare la classe comme abstraite, ce qui signifie qu'elle ne peut pas être instanciée directement.
 open abstract class Item constructor(
     // Clé primaire auto-incrémentée
@@ -21,14 +20,18 @@ open abstract class Item constructor(
     // Description de l'item
     var description: String,
     //Chemin vers l'image de l'item
-    var cheminImage:String?
+    var cheminImage:String?,
+    @OneToMany(mappedBy = "item", cascade = [CascadeType.REMOVE], orphanRemoval = true)
+    open var ligneInventaires: MutableList<LigneInventaire> = mutableListOf()
 ) {
+
+
     /**
      * Méthode abstraite permettant d'utiliser l'objet sur une cible (personnage).
      *
      * @param cible Le personnage sur lequel l'objet est utilisé.
      */
-    abstract fun utiliser(cible: Personnage)
+    abstract fun utiliser(cible: Personnage):String
 
     /**
      * Retourne une représentation textuelle de l'objet.

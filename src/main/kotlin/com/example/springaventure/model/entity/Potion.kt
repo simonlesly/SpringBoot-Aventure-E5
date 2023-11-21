@@ -30,8 +30,10 @@ class Potion(
      *
      * @param cible Le personnage sur lequel la potion est utilisée pour soigner.
      */
-    override fun utiliser(cible: Personnage) {
-        //TODO Refaire la logique de boire potion
-        cible.boirePotion()
+    override fun utiliser(cible: Personnage):String {
+        val pvInitiale=cible.pointDeVie
+        cible.pointDeVie+=soin
+        cible.ajouterLigneInventaire(this,-1)
+        return "${this.nom} soigne ${cible.nom} pour ${cible.pointDeVie-pvInitiale} PV"
     }
 }

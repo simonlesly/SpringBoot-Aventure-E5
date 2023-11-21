@@ -13,8 +13,16 @@ class Campagne constructor(
     var dateMaj:LocalDate,
     var dernierScore:Int,
     var meilleurScore:Int,
+    var statut:String,
     @OneToMany(mappedBy = "campagne", cascade = [CascadeType.REMOVE])
-    var combats: MutableList<Combat> = mutableListOf()
+    var combats: MutableList<Combat> = mutableListOf(),
+    @ManyToOne
+    @JoinColumn(name = "utilisateur_id")
+     var utilisateur: Utilisateur? = null,
+    @ManyToOne
+    @JoinColumn(name = "hero_id")
+    var hero: Personnage? = null
+
 ) {
 
 

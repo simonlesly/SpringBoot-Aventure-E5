@@ -21,6 +21,10 @@ class Utilisateur constructor(
      var roles: MutableList<Role> = mutableListOf()
 
 ) {
+    @OneToMany(mappedBy = "utilisateur", cascade = [CascadeType.REMOVE])
+    open var campagnes: MutableList<Campagne> = mutableListOf()
 
 
+    @OneToMany(mappedBy = "utilisateur", orphanRemoval = true)
+    open var personnages: MutableList<Personnage> = mutableListOf()
 }

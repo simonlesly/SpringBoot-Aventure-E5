@@ -57,8 +57,8 @@ class Arme constructor(
      *
      * @param cible Le personnage sur lequel l'arme est équipée.
      */
-    override fun utiliser(cible: Personnage) {
-        cible.equipe(this)
+    override fun utiliser(cible: Personnage):String {
+        return cible.equipe(this)
     }
 
     /**
