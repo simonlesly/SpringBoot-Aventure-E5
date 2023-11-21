@@ -23,5 +23,19 @@ open abstract class Item constructor(
     //Chemin vers l'image de l'item
     var cheminImage:String?
 ) {
-// TODO sprint 5: methode utiliser
+    /**
+     * Méthode abstraite permettant d'utiliser l'objet sur une cible (personnage).
+     *
+     * @param cible Le personnage sur lequel l'objet est utilisé.
+     */
+    abstract fun utiliser(cible: Personnage)
+
+    /**
+     * Retourne une représentation textuelle de l'objet.
+     *
+     * @return Une chaîne de caractères contenant le nom et la description de l'objet.
+     */
+    override fun toString(): String {
+        return "${nom} (nom='$nom', description='$description')"
+    }
 }
