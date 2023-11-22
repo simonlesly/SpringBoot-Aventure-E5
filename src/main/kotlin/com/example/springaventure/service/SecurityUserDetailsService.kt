@@ -13,31 +13,39 @@ import org.springframework.security.crypto.password.PasswordEncoder
 import org.springframework.stereotype.Service
 import org.springframework.transaction.annotation.Transactional
 
+/**
+ * Service chargé de récupérer les détails de l'utilisateur pour l'authentification Spring Security.
+ *
+ * @param utilisateurDao Un objet DAO (Data Access Object) pour accéder aux données des utilisateurs.
+ */
 @Service
 class SecurityUserDetailsService constructor(
-     val utilisateurDao: UtilisateurDao,
-     val encoder: PasswordEncoder
-) : UserDetailsService
-{
+    val utilisateurDao: UtilisateurDao
+) : UserDetailsService {
+
     /***
-     * Une méthode qui prend en param un nom d'utilisateur ou email qui provient du formulaire de login.
-     * Et retourne un objet User (class provenant de Security)  avec un username,password (encoder), une liste de permissions
-     * @param username peudo ou email du form de login
-     * @return  un objet User (qui implement l'interface UserDetails)
-     * @throws UsernameNotFoundException
+     * Charge les détails de l'utilisateur par son nom d'utilisateur (pseudo ou email) lors de l'authentification.
+     *
+     * @param username Le pseudo ou email provenant du formulaire de login.
+     * @return Un objet User (implémentant UserDetails) avec le nom d'utilisateur, le mot de passe (encodé),
+     *         et une liste de permissions (rôles).
+     * @throws UsernameNotFoundException Si l'utilisateur n'est pas trouvé.
      */
     @Transactional(readOnly = true)
     @Throws(UsernameNotFoundException::class)
     override fun loadUserByUsername(username: String): UserDetails {
 
+        // Récupérer l'utilisateur depuis la base de données en utilisant le nom d'utilisateur (pseudo ou email)
         val utilisateur: Utilisateur = utilisateurDao.findByEmail(username)
             ?: throw UsernameNotFoundException("Utilisateur non trouvé $username")
 
+        // Créer une liste de permissions (rôles) pour l'utilisateur
         val permissions: MutableSet<GrantedAuthority> = HashSet()
-        for(unRole in utilisateur.roles){
+        for (unRole in utilisateur.roles) {
             permissions.add(SimpleGrantedAuthority(unRole.nom))
         }
 
+        // Retourner un objet User (implémentant UserDetails) avec les détails de l'utilisateur
         return User(utilisateur.email, utilisateur.mdp, permissions)
     }
 }

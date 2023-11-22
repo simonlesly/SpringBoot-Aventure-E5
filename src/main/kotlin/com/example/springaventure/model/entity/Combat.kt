@@ -8,31 +8,46 @@ class Combat constructor(
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id", nullable = false)
     var id: Long? = null,
-    var nbTour:Int,
+    var nbTour:Int=0,
     var nbTourMin:Int,
     @ManyToOne
     @JoinColumn(name = "campagne_id")
-    open var campagne: Campagne? = null,
+     var campagne: Campagne,
     @ManyToOne
     @JoinColumn(name = "monstre_id", nullable = false)
-     var monstre: Personnage? = null
+     var monstre: Personnage
 
 ) {
-//    fun tourDeMonstre() {
-//        println("---Tour de ${monstre?.nom} (points de vie: ${monstre?.pointDeVie}---)\u001B[31m")
-//        val nbAlea = (0..100).random()
-//        // Le monstre a une faible chance (par exemple, 10%) de boire une potion s'il est blessé
-//        if (monstre.pointDeVie < monstre?.pointDeVieMax / 2 && nbAlea < 10 && monstre.aUnePotion()) {
-//            monstre.boirePotion()
-//        } else {
-//            if (nbAlea < 60) {
-//                monstre.attaquer(joueur)
-//            } else {
-//                println("${monstre.nom} choisit de passer.")
-//            }
-//        }
-//        println("\u001b[0m")
-//    }
+    /**
+     * Méthode représentant le tour d'un monstre dans la campagne.
+     * @return Un message décrivant les actions effectuées par le monstre pendant son tour.
+     */
+    fun tourDeMonstre(): String {
+        // Incrémenter le compteur de tours pour le personnage
+        this.nbTour++
+        // Initialiser le message avec des informations sur le tour du monstre
+        var msg = "---Tour de ${monstre.nom} (points de vie: ${monstre.pointDeVie})---<br>"
+        // Générer un nombre aléatoire entre 0 et 100
+        val nbAlea = (0..100).random()
+        // Le monstre a une faible chance (par exemple, 10%) de boire une potion s'il est blessé
+        if (monstre.pointDeVie < monstre.pointDeVieMax / 2 && nbAlea < 10 && monstre.aUnePotion()) {
+            // Si la condition est satisfaite, le monstre boit une potion sans la consommer
+            msg += monstre.boirePotion(false)
+        } else {
+            // Sinon, le monstre prend une décision en fonction du nombre aléatoire
+            if (nbAlea < 60) {
+                // Le monstre attaque le héros avec une probabilité de 60%
+                msg += monstre.attaquer(this.campagne.hero!!)
+            } else {
+                // Le monstre choisit de passer son tour avec une probabilité de 40%
+                msg += "${monstre.nom} choisit de passer."
+            }
+        }
+        // Ajouter une balise HTML de saut de ligne à la fin du message
+        msg += "<br>"
+        // Retourner le message décrivant les actions du monstre pendant son tour
+        return msg
+    }
 
 
 

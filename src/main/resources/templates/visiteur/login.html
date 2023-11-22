@@ -1,16 +1,18 @@
 <!DOCTYPE html>
-<html lang="fr">
+<html lang="fr" xmlns:th="http://www.thymeleaf.org">
 <head th:replace="mesFragments :: fragHead">
     <meta charset="UTF-8">
-    <title>Title</title>
+    <title>Login</title>
 </head>
 <body>
 <div class="vh-100">
     <nav th:replace="mesFragments :: fragNav"></nav>
     <main class="container">
-
         <h1>Login</h1>
-        <p th:text="${error}" class="error"></p>
+
+        <!-- Affiche le message d'erreur si l'attribut "error" est présent dans le modèle -->
+        <p th:if="${error}" class="alert alert-danger">Identifiants incorrects. Veuillez réessayer.</p>
+
         <form action="/login" method="post">
             <div class="mb-3">
                 <label for="username">Email</label>
