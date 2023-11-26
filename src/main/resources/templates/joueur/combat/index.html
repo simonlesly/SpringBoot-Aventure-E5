@@ -11,13 +11,16 @@
         <h1>Combat</h1>
         <div class="row row-cols-2 ">
             <div class="card mx-auto" style="width: 18rem;">
-                <img src="..." class="card-img-top" alt="...">
+                <img th:src="@{/img/personnage/hero.jpg/hero.jpg}" class="card-img-top" alt="...">
                 <div class="card-body">
-                    <h5 class="card-title" th:text="${leCombat.campagne.hero.nom}">Card title</h5>
-                    <p th:text="${leCombat.campagne.hero.pointDeVie+'/'+leCombat.campagne.hero.pointDeVieMax}"></p>
+                    <h5 class="card-title" th:text="${combat.campagne.hero.nom}">Card title</h5>
+                    <p th:text="${combat.campagne.hero.pointDeVie+'/'+combat.campagne.hero.pointDeVieMax}"></p>
                     <div class="progress" role="progressbar" aria-label="vieHero">
-                        <div class="progress-bar" th:style="'width:'+${leCombat.campagne.hero.pointDeVie/(leCombat.campagne.hero.pointDeVieMax/100)}+'%'"></div>
+                        <div th:class="${combat.campagne.hero.pointDeVie>combat.campagne.hero.pointDeVieMax/2?'bg-success':'bg-danger'}" class="px-1 progress-bar" th:style="'width: ' + ${combat.campagne.hero.pointDeVie * 100 / combat.campagne.hero.pointDeVieMax} + '%'">
+
+                        </div>
                     </div>
+
 
                 </div>
                 <ul class="list-group list-group-flush">
@@ -26,18 +29,29 @@
                     <li class="list-group-item">A third item</li>
                 </ul>
                 <div class="card-body">
-                    <a href="#" class="card-link">Card link</a>
-                    <a href="#" class="card-link">Another link</a>
+                    <div class="btn-group" role="group" aria-label="Actions du héros">
+                        <a th:href="@{/joueur/combat/{idCombat}/attaque/{idCible}(idCombat=${combat.id}, idCible=${combat.monstre.id})}"
+                           class="btn btn-primary">Attaquer</a>
+
+                        <a th:href="@{/joueur/combat/{idCombat}/boirePotion(idCombat=${combat.id})}"
+                           class="btn btn-success">Boire Potion</a>
+
+                        <a th:href="@{/joueur/combat/{idCombat}/attendre(idCombat=${combat.id})}"
+                           class="btn btn-warning">Attendre</a>
+                    </div>
+
                 </div>
             </div>
 
             <div class="card mx-auto" style="width: 18rem;">
-                <img src="..." class="card-img-top" alt="...">
+                <img th:src="'/img/monstre.jpg'" class="card-img-top" alt="...">
                 <div class="card-body">
-                    <h5 class="card-title" th:text="${leCombat.monstre.nom}">Card title</h5>
-                    <p th:text="${leCombat.monstre.pointDeVie+'/'+leCombat.monstre.pointDeVieMax}"></p>
-                    <div class="progress" role="progressbar" aria-label="vieHero">
-                        <div class="progress-bar" th:style="'width:'+${leCombat.monstre.pointDeVie/(leCombat.monstre.pointDeVieMax/100)}+'%'"></div>
+                    <h5 class="card-title" th:text="${combat.monstre.nom}">Card title</h5>
+                    <p th:text="${combat.monstre.pointDeVie+'/'+combat.monstre.pointDeVieMax}"></p>
+                    <div class="progress" role="progressbar" aria-label="vieMonstre">
+                        <div th:class="${combat.monstre.pointDeVie>combat.monstre.pointDeVieMax/2?'bg-success':'bg-danger'}" class="progress-bar px-1" th:style="'width: ' + ${combat.monstre.pointDeVie * 100 / combat.monstre.pointDeVieMax} + '%'">
+
+                        </div>
                     </div>
 
                 </div>
@@ -46,12 +60,21 @@
                     <li class="list-group-item">A second item</li>
                     <li class="list-group-item">A third item</li>
                 </ul>
-                <div class="card-body">
-                    <a href="#" class="card-link">Card link</a>
-                    <a href="#" class="card-link">Another link</a>
+
+            </div>
+        </div>
+        <div class="row my-3">
+            <div th:if="${messages != null}">
+                <div class="alert alert-info">
+                    <h4>Messages de combat :</h4>
+                    <ul>
+                        <li th:each="message : ${messages}" th:utext="${message}"></li>
+                    </ul>
                 </div>
             </div>
         </div>
+
+
     </main>
 </div>
 <footer th:replace="mesFragments :: fragFooter"></footer>

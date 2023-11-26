@@ -2,6 +2,7 @@ package com.example.springaventure.controller.joueur
 
 import com.example.springaventure.model.dao.CampagneDao
 import com.example.springaventure.model.dao.PersonnageDao
+import com.example.springaventure.model.entity.Combat
 import org.springframework.security.core.Authentication
 import org.springframework.security.core.context.SecurityContextHolder
 import org.springframework.stereotype.Controller
@@ -26,16 +27,20 @@ class CampagneControlleur (val campagneDao: CampagneDao,val personnageDao: Perso
     @GetMapping("/joueur/campagne/{id}/play")
     fun play(@PathVariable id:Long, model: Model):String{
       //TODO verification
-        val campagne = this.campagneDao.findById(id).orElseThrow()
-        campagne.hero!!.pointDeVie=campagne.hero!!.pointDeVieMax
+        var campagne = this.campagneDao.findById(id).orElseThrow()
+        var hero=campagne!!.hero
+        hero!!.pointDeVie=campagne.hero!!.pointDeVieMax
+        hero=personnageDao.save(hero)
         for(  combat in campagne.combats  ){
             val monstre=combat.monstre
             monstre!!.pointDeVie=monstre.pointDeVieMax
             personnageDao.save(monstre)
         }
         campagne.statut="En cours"
-        campagneDao.save(campagne)
-        model.addAttribute("leCombat",campagne.combats[0])
+        campagne=campagneDao.save(campagne)
+        val leCombat: Combat =campagne.combats.find { combat -> combat.estTerminer==false  } ?: campagne.combats.last()
+        //TODO Campagne terminer
+        model.addAttribute("combat",leCombat)
         return "joueur/combat/index"
     }
 }

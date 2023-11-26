@@ -31,5 +31,5 @@ INSERT INTO Personnage (nom, attaque, defense, endurance, vitesse, point_de_vie,
 INSERT INTO campagne (nom, date_maj, dernier_score, meilleur_score, statut, utilisateur_id,hero_id) VALUES ('Campagne1', '2023-01-01', 0, 0, 'En cours', 1,7);
 INSERT INTO campagne (nom, date_maj, dernier_score, meilleur_score, statut, utilisateur_id,hero_id) VALUES ('Campagne2', '2023-02-01', 0, 0, 'En cours', 1,7);
 
-insert into combat (nb_tour, nb_tour_min, campagne_id, monstre_id) VALUES (0,0,1,1),(0,0,1,2),(0,0,1,3);
-insert into combat (nb_tour, nb_tour_min, campagne_id, monstre_id) VALUES (0,0,2,1),(0,0,2,2),(0,0,2,5),(0,0,2,6);
+insert into combat (nb_tour ,est_terminer, campagne_id, monstre_id) VALUES (0,false,1,1),(0,false,1,2),(0,false,1,3);
+insert into combat (nb_tour ,est_terminer, campagne_id, monstre_id) VALUES (0,false,2,1),(0,false,2,2),(0,false,2,5),(0,false,2,6);

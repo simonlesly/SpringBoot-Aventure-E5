@@ -9,7 +9,7 @@ class Combat constructor(
     @Column(name = "id", nullable = false)
     var id: Long? = null,
     var nbTour:Int=0,
-    var nbTourMin:Int,
+    var estTerminer:Boolean,
     @ManyToOne
     @JoinColumn(name = "campagne_id")
      var campagne: Campagne,
@@ -49,6 +49,40 @@ class Combat constructor(
         return msg
     }
 
+    /**
+     * Cette méthode gère l'action du héros dans le combat.
+     *
+     * @param cible La cible de l'action (peut être null selon l'action).
+     * @param action L'action à effectuer (attaque, boirePotion, attendre, utiliserItem, etc.).
+     * @param item L'item à utiliser dans l'action (peut être null selon l'action).
+     * @return Un message décrivant le résultat de l'action du héros.
+     */
+    fun faireActionHero(cible: Personnage?, action: String, item: Item?): String {
+        // Récupération du héros de la campagne
+        val hero = this.campagne.hero
+        var msg: String
+
+        try {
+            // Utilisation d'une expression when pour gérer différents types d'actions
+            msg = when (action) {
+                "attaquer" -> hero!!.attaquer(cible!!)
+                "boirePotion" -> hero!!.boirePotion()
+                "attendre" -> " ${hero!!.nom} passe son tour"
+                "utiliserItem" -> item!!.utiliser(cible!!)
+                // Ajoutez d'autres cas pour chaque type d'action
+                else -> {
+                    "Action Impossible"
+                }
+            }
+        } catch (error: Exception) {
+            // Gestion des erreurs, affichage du message d'erreur et assignation d'un message générique
+            println("Message = " + error.message)
+            msg = "Une erreur s'est produite"
+        }
+
+        // Retourne le message résultant de l'action du héros
+        return msg
+    }
 
 
 }
