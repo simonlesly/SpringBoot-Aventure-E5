@@ -23,10 +23,9 @@ class Combat constructor(
      * @return Un message décrivant les actions effectuées par le monstre pendant son tour.
      */
     fun tourDeMonstre(): String {
-        // Incrémenter le compteur de tours pour le personnage
-        this.nbTour++
+
         // Initialiser le message avec des informations sur le tour du monstre
-        var msg = "---Tour de ${monstre.nom} (points de vie: ${monstre.pointDeVie})---<br>"
+        var msg = ""
         // Générer un nombre aléatoire entre 0 et 100
         val nbAlea = (0..100).random()
         // Le monstre a une faible chance (par exemple, 10%) de boire une potion s'il est blessé

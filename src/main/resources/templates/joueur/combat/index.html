@@ -5,13 +5,13 @@
     <title>Title</title>
 </head>
 <body>
-<div class="vh-100">
+<div class="min-vh-100">
     <nav th:replace="mesFragments :: fragNav"></nav>
     <main class="container">
         <h1>Combat</h1>
         <div class="row row-cols-2 ">
             <div class="card mx-auto" style="width: 18rem;">
-                <img th:src="@{/img/personnage/hero.jpg/hero.jpg}" class="card-img-top" alt="...">
+                <img th:src="@{/img/personnage/hero.jpg}" class="card-img-top" alt="...">
                 <div class="card-body">
                     <h5 class="card-title" th:text="${combat.campagne.hero.nom}">Card title</h5>
                     <p th:text="${combat.campagne.hero.pointDeVie+'/'+combat.campagne.hero.pointDeVieMax}"></p>
@@ -23,28 +23,26 @@
 
 
                 </div>
-                <ul class="list-group list-group-flush">
-                    <li class="list-group-item" >An item</li>
-                    <li class="list-group-item">A second item</li>
-                    <li class="list-group-item">A third item</li>
-                </ul>
-                <div class="card-body">
-                    <div class="btn-group" role="group" aria-label="Actions du héros">
-                        <a th:href="@{/joueur/combat/{idCombat}/attaque/{idCible}(idCombat=${combat.id}, idCible=${combat.monstre.id})}"
-                           class="btn btn-primary">Attaquer</a>
+                    <div class="list-group list-group-flush" role="" aria-label="Actions du héros">
+                        <form class="my-1 mx-auto" th:action="@{/joueur/combat/{idCombat}/attaque/{idCible}(idCombat=${combat.id}, idCible=${combat.monstre.id})}" method="post">
+                            <button class="btn btn-primary">Attaquer</button>
+                        </form>
+                        <form class="mb-1 mx-auto" th:action="@{/joueur/combat/{idCombat}/boirePotion(idCombat=${combat.id})}" method="post">
+                            <button class="btn btn-primary">Boire Potion</button>
+                        </form>
+                        <form class="mb-1 mx-auto" th:action="@{/joueur/combat/{idCombat}/attendre(idCombat=${combat.id})}" method="post">
+                            <button class="btn btn-primary">Attendre</button>
+                        </form>
 
-                        <a th:href="@{/joueur/combat/{idCombat}/boirePotion(idCombat=${combat.id})}"
-                           class="btn btn-success">Boire Potion</a>
-
-                        <a th:href="@{/joueur/combat/{idCombat}/attendre(idCombat=${combat.id})}"
-                           class="btn btn-warning">Attendre</a>
                     </div>
+                <div class="card-body">
+
 
                 </div>
             </div>
 
             <div class="card mx-auto" style="width: 18rem;">
-                <img th:src="'/img/monstre.jpg'" class="card-img-top" alt="...">
+                <img th:src="'/img/personnage/monstre.jpg'" class="card-img-top" alt="...">
                 <div class="card-body">
                     <h5 class="card-title" th:text="${combat.monstre.nom}">Card title</h5>
                     <p th:text="${combat.monstre.pointDeVie+'/'+combat.monstre.pointDeVieMax}"></p>

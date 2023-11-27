@@ -24,7 +24,7 @@ class CampagneControlleur (val campagneDao: CampagneDao,val personnageDao: Perso
         return "joueur/campagne/index"
     }
 
-    @GetMapping("/joueur/campagne/{id}/play")
+    @GetMapping("/joueur/campagne/{id}/jouer")
     fun play(@PathVariable id:Long, model: Model):String{
       //TODO verification
         var campagne = this.campagneDao.findById(id).orElseThrow()

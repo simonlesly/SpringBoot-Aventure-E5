@@ -9,12 +9,25 @@ import org.springframework.stereotype.Controller
 import org.springframework.ui.Model
 import org.springframework.web.bind.annotation.GetMapping
 import org.springframework.web.bind.annotation.PathVariable
+import org.springframework.web.bind.annotation.PostMapping
 import org.springframework.web.bind.annotation.RequestParam
+import org.springframework.web.servlet.mvc.support.RedirectAttributes
 
 
 @Controller
 class CombatControlleur (val combatService: CombatService, val combatDao: CombatDao,val personnageDao: PersonnageDao,val itemDao: ItemDao) {
 
+    @GetMapping("/joueur/combat/{idCombat}")
+    fun show(@PathVariable idCombat: Long,model: Model):String{
+        val combat = combatDao.findById(idCombat).orElseThrow()
+        // Vérification de la fin du combat avant d'effectuer l'attaque
+        if (combatService.verificationFinCombat(combat.campagne.hero!!, combat.monstre) != null) {
+            // Redirection vers la page de la campagne si le combat est terminé
+            return "redirect:/joueur/campagne/${combat.campagne.id}/jouer"
+        }
+        model.addAttribute("combat", combat)
+        return "joueur/combat/index"
+    }
     /**
      * Cette méthode gère l'attaque du héros contre une cible dans le combat.
      *
@@ -23,25 +36,20 @@ class CombatControlleur (val combatService: CombatService, val combatDao: Combat
      * @param model Le modèle Spring utilisé pour passer des données à la vue Thymeleaf.
      * @return Le nom de la vue Thymeleaf à afficher après l'attaque.
      */
-    @GetMapping("/joueur/combat/{idCombat}/attaque/{idCible}")
-    fun attaquer(@PathVariable idCombat: Long, @PathVariable idCible: Long, model: Model): String {
+    @PostMapping("/joueur/combat/{idCombat}/attaque/{idCible}")
+    fun attaquer(@PathVariable idCombat: Long, @PathVariable idCible: Long,redirectAttributes: RedirectAttributes): String {
         // Récupération du combat avant le tour et de la cible à partir de leurs identifiants
         val combatAvantTour = combatDao.findById(idCombat).orElseThrow()
         val cible = personnageDao.findById(idCible).orElseThrow()
-        // Vérification de la fin du combat avant d'effectuer l'attaque
-        if (combatService.verificationFinCombat(combatAvantTour.campagne.hero!!, combatAvantTour.monstre) != null) {
-            // Redirection vers la page de la campagne si le combat est terminé
-            return "redirect:/joueur/campagne/${combatAvantTour.campagne.id}/play"
-        }
+
         // Exécution de l'attaque et récupération des messages de combat
         val lesMessages = combatService.combattre(combatAvantTour, cible, "attaquer", null)
-        // Récupération du combat après le tour
-        val combatApresTour = combatDao.findById(idCombat).orElseThrow()
+
         // Ajout des messages et du combat au modèle pour affichage dans la vue Thymeleaf
-        model.addAttribute("messages", lesMessages)
-        model.addAttribute("combat", combatApresTour)
-        // Retourne le nom de la vue Thymeleaf à afficher
-        return "joueur/combat/index"
+        redirectAttributes.addFlashAttribute("messages", lesMessages)
+
+
+        return "redirect:/joueur/combat/${idCombat}"
     }
 
     /**
@@ -51,32 +59,22 @@ class CombatControlleur (val combatService: CombatService, val combatDao: Combat
      * @param model Le modèle Spring utilisé pour passer des données à la vue Thymeleaf.
      * @return Le nom de la vue Thymeleaf à afficher après avoir bu la potion.
      */
-    @GetMapping("/joueur/combat/{idCombat}/boirePotion")
+    @PostMapping("/joueur/combat/{idCombat}/boirePotion")
     fun boirePotion(
         @PathVariable idCombat: Long,
-        model: Model
+        redirectAttributes: RedirectAttributes
     ): String {
         // Récupération du combat avant de boire la potion
         val combatAvantPotion = combatDao.findById(idCombat).orElseThrow()
 
-        // Vérification de la fin du combat avant de boire la potion
-        if (combatService.verificationFinCombat(combatAvantPotion.campagne.hero!!, combatAvantPotion.monstre) != null) {
-            // Redirection vers la page de la campagne si le combat est terminé
-            return "redirect:/joueur/campagne/${combatAvantPotion.campagne.id}/play"
-        }
-
         // Exécution de l'action "boirePotion" et récupération des messages de combat
         val lesMessages = combatService.combattre(combatAvantPotion, combatAvantPotion.campagne.hero!!, "boirePotion", null)
 
-        // Récupération du combat après avoir bu la potion
-        val combatApresPotion = combatDao.findById(idCombat).orElseThrow()
-
         // Ajout des messages et du combat au modèle pour affichage dans la vue Thymeleaf
-        model.addAttribute("messages", lesMessages)
-        model.addAttribute("combat", combatApresPotion)
+        redirectAttributes.addFlashAttribute("messages", lesMessages)
 
-        // Retourne le nom de la vue Thymeleaf à afficher
-        return "joueur/combat/index"
+
+        return "redirect:/joueur/combat/${idCombat}"
     }
 
     /**
@@ -86,32 +84,22 @@ class CombatControlleur (val combatService: CombatService, val combatDao: Combat
      * @param model Le modèle Spring utilisé pour passer des données à la vue Thymeleaf.
      * @return Le nom de la vue Thymeleaf à afficher après avoir attendu.
      */
-    @GetMapping("/joueur/combat/{idCombat}/attendre")
+    @PostMapping("/joueur/combat/{idCombat}/attendre")
     fun attendre(
         @PathVariable idCombat: Long,
-        model: Model
+        redirectAttributes: RedirectAttributes
     ): String {
         // Récupération du combat avant d'attendre
         val combatAvantAttendre = combatDao.findById(idCombat).orElseThrow()
 
-        // Vérification de la fin du combat avant d'attendre
-        if (combatService.verificationFinCombat(combatAvantAttendre.campagne.hero!!, combatAvantAttendre.monstre) != null) {
-            // Redirection vers la page de la campagne si le combat est terminé
-            return "redirect:/joueur/campagne/${combatAvantAttendre.campagne.id}/play"
-        }
-
         // Exécution de l'action "attendre" et récupération des messages de combat
         val lesMessages = combatService.combattre(combatAvantAttendre, null, "attendre", null)
 
-        // Récupération du combat après avoir attendu
-        val combatApresAttendre = combatDao.findById(idCombat).orElseThrow()
-
         // Ajout des messages et du combat au modèle pour affichage dans la vue Thymeleaf
-        model.addAttribute("messages", lesMessages)
-        model.addAttribute("combat", combatApresAttendre)
+        redirectAttributes.addFlashAttribute("messages", lesMessages)
 
-        // Retourne le nom de la vue Thymeleaf à afficher
-        return "joueur/combat/index"
+
+        return "redirect:/joueur/combat/${idCombat}"
     }
 
     /**
