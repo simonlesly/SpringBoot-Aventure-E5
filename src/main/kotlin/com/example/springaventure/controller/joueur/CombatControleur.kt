@@ -15,7 +15,7 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes
 
 
 @Controller
-class CombatControlleur (val combatService: CombatService, val combatDao: CombatDao,val personnageDao: PersonnageDao,val itemDao: ItemDao) {
+class CombatControleur (val combatService: CombatService, val combatDao: CombatDao, val personnageDao: PersonnageDao, val itemDao: ItemDao) {
 
     @GetMapping("/joueur/combat/{idCombat}")
     fun show(@PathVariable idCombat: Long,model: Model):String{

@@ -2,9 +2,7 @@ package com.example.springaventure.controller.joueur
 
 import com.example.springaventure.model.dao.CampagneDao
 import com.example.springaventure.model.dao.PersonnageDao
-import com.example.springaventure.model.entity.Campagne
 import com.example.springaventure.model.entity.Combat
-import org.springframework.data.domain.Page
 import org.springframework.data.domain.Pageable
 import org.springframework.security.core.Authentication
 import org.springframework.security.core.context.SecurityContextHolder
@@ -16,7 +14,7 @@ import org.springframework.web.bind.annotation.RequestParam
 
 
 @Controller
-class CampagneControlleur(val campagneDao: CampagneDao, val personnageDao: PersonnageDao) {
+class CampagneControleur(val campagneDao: CampagneDao, val personnageDao: PersonnageDao) {
     @GetMapping("/joueur/campagne")
     fun index(
         model: Model,

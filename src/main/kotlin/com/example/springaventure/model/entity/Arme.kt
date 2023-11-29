@@ -5,7 +5,7 @@ import jakarta.persistence.*
 @Entity
 @DiscriminatorValue("arme")
 class Arme constructor(
-    id: Long,
+    id: Long?,
     nom: String,
     description: String,
     cheminImage: String?,

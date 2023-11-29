@@ -37,6 +37,21 @@
             <nav aria-label="Page navigation example">
                 <ul class="pagination">
                     <!-- Liens de pagination -->
+                    <li class="page-item" th:if="${campagnes.hasPrevious()}">
+                        <a class="page-link" th:href="@{${'/joueur/campagne'}(page=0, size=${campagnes.size}, sort=${campagnes.sort})}">Première</a>
+                    </li>
+                    <li class="page-item" th:if="${campagnes.hasPrevious()}">
+                        <a class="page-link" th:href="@{${'/joueur/campagne'}(page=${campagnes.number - 1}, size=${campagnes.size}, sort=${campagnes.sort})}">Précédente</a>
+                    </li>
+                    <li class="page-item" th:each="page : ${#numbers.sequence(0, campagnes.totalPages - 1)}" th:class="${campagnes.number == page} ? 'active' : ''">
+                        <a class="page-link" th:href="@{${'/joueur/campagne'}(page=${page}, size=${campagnes.size}, sort=${campagnes.sort})}" th:text="${page + 1}">1</a>
+                    </li>
+                    <li class="page-item" th:if="${campagnes.hasNext()}">
+                        <a class="page-link" th:href="@{${'/joueur/campagne'}(page=${campagnes.number + 1}, size=${campagnes.size}, sort=${campagnes.sort})}">Suivante</a>
+                    </li>
+                    <li class="page-item" th:if="${campagnes.hasNext()}">
+                        <a class="page-link" th:href="@{${'/joueur/campagne'}(page=${campagnes.totalPages - 1}, size=${campagnes.size}, sort=${campagnes.sort})}">Dernière</a>
+                    </li>
                     <!-- ... -->
                 </ul>
             </nav>

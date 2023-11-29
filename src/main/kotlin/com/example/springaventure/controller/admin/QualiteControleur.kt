@@ -15,7 +15,7 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes
  * Contrôleur gérant les opérations liées aux qualités dans l'interface d'administration.
  */
 @Controller
-class QualiteControlleur(val qualiteDao: QualiteDao) {
+class QualiteControleur(val qualiteDao: QualiteDao) {
 
     /**
      * Affiche la liste de toutes les qualités.

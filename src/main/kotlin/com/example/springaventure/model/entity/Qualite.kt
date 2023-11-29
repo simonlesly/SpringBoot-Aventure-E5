@@ -21,5 +21,6 @@ class Qualite constructor(
     @OneToMany(mappedBy = "qualite", cascade = [CascadeType.REMOVE])
     open var armures: MutableList<Armure> = mutableListOf()
 
-
+    @OneToMany(mappedBy = "qualite", cascade = [CascadeType.REMOVE], orphanRemoval = true)
+    open var accessoires: MutableList<Accessoire> = mutableListOf()
 }

@@ -8,7 +8,7 @@ import org.springframework.web.bind.annotation.*
 import org.springframework.web.servlet.mvc.support.RedirectAttributes
 
 @Controller
-class TypeArmeControlleur(val typeArmeDao: TypeArmeDao) {
+class TypeArmeControleur(val typeArmeDao: TypeArmeDao) {
 
     @GetMapping("/admin/typearme")
     fun index(model: Model): String {

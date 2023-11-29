@@ -40,6 +40,9 @@ open class Personnage(
             field = minOf(value, this.pointDeVieMax)
         }
 
+    @ManyToOne
+    @JoinColumn(name = "accessoire_id")
+    open var accessoire: Accessoire? = null
 
     fun calculeDefense(): Int {
         var resultat = this.defense / 2
