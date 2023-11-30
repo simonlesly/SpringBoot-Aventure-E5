@@ -42,35 +42,31 @@
                             <div th:if="${combat.campagne.hero.armeEquipee!=null}"
                                  th:style="'color :'+${combat.campagne.hero.armeEquipee.qualite.getCouleur()}"
                                  th:text="${combat.campagne.hero.armeEquipee.nom}"></div>
-                            <div th:else>Pas d'arme</div>
+                            <div th:unless="${combat.campagne.hero.armeEquipee!=null}">Pas d'arme</div>
                         </li>
                         <li class="list-group-item">
                             Armure :
                             <div th:if="${combat.campagne.hero.armureEquipee!=null}"
                                  th:style="'color :'+${combat.campagne.hero.armureEquipee.qualite.getCouleur()}"
                                  th:text="${combat.campagne.hero.armureEquipee.nom}"></div>
-                            <div th:else>Pas d'arme</div>
+                            <div th:unless="${combat.campagne.hero.armureEquipee!=null}">Pas d'armure</div>
                         </li>
 
                     </ul>
 
-                    <div class="btn-group" role="group" aria-label="Button group with nested dropdown">
+                    <div class="" role="group" aria-label="Button group with nested dropdown">
 
-                    <form class="my-1 mx-auto"
-                              th:action="@{/joueur/combat/{idCombat}/attaque/{idCible}(idCombat=${combat.id}, idCible=${combat.monstre.id})}"
-                              method="post">
-                            <button class="btn btn-primary">Attaquer</button>
-                        </form>
-                        <form class="mb-1 mx-auto"
+                        <form class="mb-1 mx-auto row"
                               th:action="@{/joueur/combat/{idCombat}/boirePotion(idCombat=${combat.id})}" method="post">
                             <button class="btn btn-primary">Boire Potion</button>
                         </form>
-                        <form class="mb-1 mx-auto"
+
+                        <form class="mb-1 mx-auto row"
                               th:action="@{/joueur/combat/{idCombat}/attendre(idCombat=${combat.id})}" method="post">
                             <button class="btn btn-primary">Attendre</button>
                         </form>
-                        <div class="mb-1 mx-auto">
-                            <button class="btn btn-primary">Voir Inventaire</button>
+                        <div class="mb-1 mx-auto row">
+                            <button class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#inventaireHero">Voir Inventaire</button>
                         </div>
                     </div>
 
@@ -105,23 +101,31 @@
                         </li>
                     </ul>
                     <ul class="list-group list-group-flush">
-                        <li class="list-group-item">
+                        <li class="list-group-item row">
                             Arme :
                             <div th:if="${combat.monstre.armeEquipee!=null}"
                                  th:style="'color :'+${combat.monstre.armeEquipee.qualite.getCouleur()}"
                                  th:text="${combat.monstre.armeEquipee.nom}"></div>
-                            <div th:else>Pas d'arme</div>
+                            <div th:unless="${combat.monstre.armeEquipee!=null}">Pas d'arme</div>
                         </li>
-                        <li class="list-group-item">
+                        <li class="list-group-item row">
                             Armure :
                             <div th:if="${combat.monstre.armureEquipee!=null}"
                                  th:style="'color :'+${combat.monstre.armureEquipee.qualite.getCouleur()}"
                                  th:text="${combat.monstre.armureEquipee.nom}"></div>
-                            <div th:else>Pas d'arme</div>
+                            <div th:unless="${combat.monstre.armureEquipee!=null}">Pas d'armure</div>
                         </li>
 
                         <li class="list-group-item">
-                            <button class="btn btn-primary">Voir Inventaire</button>
+                            <form class="mb-1 mx-auto row"
+                                  th:action="@{/joueur/combat/{idCombat}/attaque/{idCible}(idCombat=${combat.id}, idCible=${combat.monstre.id})}"
+                                  method="post">
+                                <button class="btn btn-primary">Attaquer</button>
+                            </form>
+                            <div class="mb-1 mx-auto row">
+                                <button class="btn btn-primary row">Voir Inventaire</button>
+                            </div>
+
                         </li>
                     </ul>
                 </div>
@@ -135,6 +139,30 @@
                     <ul>
                         <li th:each="message : ${messages}" th:utext="${message}"></li>
                     </ul>
+                </div>
+            </div>
+        </div>
+
+        <!-- Voir Inventaire Hero -->
+        <div class="modal fade" id="inventaireHero" tabindex="-1" aria-labelledby="inventaireHero" aria-hidden="true">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h1 class="modal-title fs-5" id="exampleModalLabel" th:text="${'Inventaire de '+combat.campagne.hero.nom}">Modal title</h1>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                    <div class="modal-body">
+                        <ul class="list-group list-group-flush">
+                            <li class="list-group-item" th:each="uneLigne : ${combat.campagne.hero.ligneInventaires}">
+                                <span th:text="${uneLigne.item.nom+' X '+uneLigne.quantite}"></span>
+                                <form th:action="'/joueur/combat/'+${combat.id}+'/utiliser?idItem='+${uneLigne.item.id}" method="post"></form>
+                            </li>
+                        </ul>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Fermer</button>
+
+                    </div>
                 </div>
             </div>
         </div>

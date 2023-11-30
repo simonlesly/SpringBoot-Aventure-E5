@@ -4,6 +4,7 @@ import com.example.springaventure.model.dao.CombatDao
 import com.example.springaventure.model.dao.ItemDao
 import com.example.springaventure.model.dao.PersonnageDao
 import com.example.springaventure.model.entity.Item
+import com.example.springaventure.model.entity.Personnage
 import com.example.springaventure.service.CombatService
 import org.springframework.stereotype.Controller
 import org.springframework.ui.Model
@@ -22,6 +23,11 @@ class CombatControleur (val combatService: CombatService, val combatDao: CombatD
         val combat = combatDao.findById(idCombat).orElseThrow()
         // Vérification de la fin du combat avant d'effectuer l'attaque
         if (combatService.verificationFinCombat(combat.campagne.hero!!, combat.monstre) != null) {
+            if(combat!!.campagne.hero!!.pointDeVie>0){
+                combat.estTerminer=true
+                combatDao.save(combat)
+            }
+
             // Redirection vers la page de la campagne si le combat est terminé
             return "redirect:/joueur/campagne/${combat.campagne.id}/jouer"
         }
@@ -126,9 +132,14 @@ class CombatControleur (val combatService: CombatService, val combatDao: CombatD
             // Redirection vers la page de la campagne si le combat est terminé
             return "redirect:/joueur/campagne/${combatAvantItem.campagne.id}/play"
         }
-
-        // Récupération de la cible à partir de son identifiant
-        val cible = personnageDao.findById(idCible).orElseThrow()
+        val cible:Personnage
+        if(idCible!=null){
+            // Récupération de la cible à partir de son identifiant
+            cible = personnageDao.findById(idCible).orElseThrow()
+        }
+        else {
+            cible=combatAvantItem.campagne.hero!!
+        }
         // Récupération de l'item à partir de son identifiant
         val item:Item=itemDao.findById(idItem).orElseThrow()
 

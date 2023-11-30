@@ -14,7 +14,7 @@ class TypeArme constructor(
     var mutiplicateurCritique: Int,
     var limiteCritique: Int,
     @OneToMany(mappedBy = "typeArme", cascade = [CascadeType.REMOVE], orphanRemoval = true)
-open var armes: MutableList<Arme> = mutableListOf()
+    var armes: MutableList<Arme> = mutableListOf()
 ) {
 
 
