@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head th:replace="mesFragments :: fragHead">
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<div class="min-vh-100">
+    <nav th:replace="mesFragments :: fragNav"></nav>
+    <main class="container">
+        <h1>Modifier un type d'arme</h1>
+        <form th:action="@{/admin/typeArme/update}" th:object="${typeArme}" method="post">
+            <input type="hidden" th:field="${typeArme.id}" />
+            <div class="mb-3">
+                <label for="nom" class="form-label">Nom</label>
+                <input type="text" class="form-control" id="nom" th:field="${typeArme.nom}" required>
+            </div>
+            <div class="mb-3">
+                <label for="nbrDes" class="form-label">Nombre de dés</label>
+                <input type="number" class="form-control" id="nbrDes" th:field="${typeArme.nbrDes}" required>
+            </div>
+            <div class="mb-3">
+                <label for="maxDes" class="form-label">Maximum des dés</label>
+                <input type="number" class="form-control" id="maxDes" th:field="${typeArme.maxDes}" required>
+            </div>
+            <div class="mb-3">
+                <label for="limiteCritique" class="form-label">Limite Critique</label>
+                <input type="number" class="form-control" id="limiteCritique" th:field="${typeArme.limiteCritique}" required>
+            </div>
+            <div class="mb-3">
+                <label for="mutiplicateurCritique" class="form-label">Multiplicateur Critique</label>
+                <input type="number" class="form-control" id="mutiplicateurCritique" th:field="${typeArme.mutiplicateurCritique}" required>
+            </div>
+            <button type="submit" class="btn btn-primary">Modifier</button>
+        </form>
+    </main>
+
+</div>
+<footer th:replace="mesFragments :: fragFooter"></footer>
+</body>
+</html>

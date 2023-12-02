@@ -64,7 +64,7 @@ class ArmureControleur (val armureDao:ArmureDao,val qualiteDao: QualiteDao,val t
         armureModifier.typeArmure=armure.typeArmure
         // TODO: Mettez à jour d'autres champs si nécessaire
         val savedArmure = this.armureDao.save(armureModifier)
-        redirectAttributes.addFlashAttribute("msgSuccess", "Modification de ${savedArmure.nom}TypeRessource$.nom réussie")
+        redirectAttributes.addFlashAttribute("msgSuccess", "Modification de ${savedArmure.nom} réussie")
         return "redirect:/admin/armure"
     }
 

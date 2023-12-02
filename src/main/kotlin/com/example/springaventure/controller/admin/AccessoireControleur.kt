@@ -28,6 +28,10 @@ class AccessoireControleur (val accessoireDao: AccessoireDao,val typeAccessoireD
     @GetMapping("/admin/accessoire/create")
     fun create(model: Model): String {
         val nouvelleAccessoire = Accessoire(null, "", "", "")
+        val types=typeAccessoireDao.findAll()
+        val qualites=qualiteDao.findAll()
+        model.addAttribute("types",types)
+        model.addAttribute("qualites",qualites)
         model.addAttribute("nouvelleAccessoire", nouvelleAccessoire)
         return "admin/accessoire/create"
     }
@@ -42,6 +46,10 @@ class AccessoireControleur (val accessoireDao: AccessoireDao,val typeAccessoireD
     @GetMapping("/admin/accessoire/{id}/edit")
     fun edit(@PathVariable id: Long, model: Model): String {
         val accessoire = this.accessoireDao.findById(id).orElseThrow()
+        val types=typeAccessoireDao.findAll()
+        val qualites=qualiteDao.findAll()
+        model.addAttribute("types",types)
+        model.addAttribute("qualites",qualites)
         model.addAttribute("accessoire", accessoire)
         return "admin/accessoire/edit"
     }
@@ -54,10 +62,6 @@ class AccessoireControleur (val accessoireDao: AccessoireDao,val typeAccessoireD
         accessoireModifier.cheminImage=accessoire.cheminImage
         accessoireModifier.description=accessoire.description
         accessoireModifier.typeAccessoire=accessoire.typeAccessoire
-
-
-
-        // TODO: Mettez à jour d'autres champs si nécessaire
         val savedAccessoire = this.accessoireDao.save(accessoireModifier)
         redirectAttributes.addFlashAttribute("msgSuccess", "Modification de ${savedAccessoire.nom}TypeRessource$.nom réussie")
         return "redirect:/admin/accessoire"

@@ -26,7 +26,7 @@ class TypeAccessoireControleur (val typeAccessoireDao: TypeAccessoireDao) {
     @GetMapping("/admin/typeAccessoire/create")
     fun create(model: Model): String {
         val nouvelleAccessoire = TypeAccessoire(null,"","")
-        model.addAttribute("nouvelleAccessoire", nouvelleAccessoire)
+        model.addAttribute("nouveauTypeAccessoire", nouvelleAccessoire)
         return "admin/typeAccessoire/create"
     }
 
@@ -50,7 +50,7 @@ class TypeAccessoireControleur (val typeAccessoireDao: TypeAccessoireDao) {
         typeAccessoireModifier.nom = typeAccessoire.nom
         typeAccessoireModifier.typeBonus = typeAccessoire.typeBonus
         val savedAccessoire = this.typeAccessoireDao.save(typeAccessoireModifier)
-        redirectAttributes.addFlashAttribute("msgSuccess", "Modification de ${savedAccessoire.nom}TypeRessource$.nom réussie")
+        redirectAttributes.addFlashAttribute("msgSuccess", "Modification de ${savedAccessoire.nom} réussie")
         return "redirect:/admin/typeAccessoire"
     }
 

@@ -11,21 +11,21 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes
 @Controller
 class ArmeControleur(val armeDao: ArmeDao, val qualiteDao: QualiteDao, val typeArmeDao: TypeArmeDao) {
 
-    @GetMapping("/acteur/ressource")
+    @GetMapping("/admin/arme")
     fun index(model: Model): String {
         val ressources = this.armeDao.findAll()
         model.addAttribute("armes", ressources)
         return "admin/arme/index"
     }
 
-    @GetMapping("/acteur/ressource/{id}")
+    @GetMapping("/admin/arme/{id}")
     fun show(@PathVariable id: Long, model: Model): String {
         val ressource = this.armeDao.findById(id).orElseThrow()
         model.addAttribute("arme", ressource)
         return "admin/arme/show"
     }
 
-    @GetMapping("/acteur/ressource/create")
+    @GetMapping("/admin/arme/create")
     fun create(model: Model): String {
         val nouvelle = Arme(null, "", "", "")
         val qualites= qualiteDao.findAll()
@@ -36,25 +36,25 @@ class ArmeControleur(val armeDao: ArmeDao, val qualiteDao: QualiteDao, val typeA
         return "admin/arme/create"
     }
 
-    @PostMapping("/acteur/ressource")
+    @PostMapping("/admin/arme")
     fun store(@ModelAttribute nouvelle: Arme, redirectAttributes: RedirectAttributes): String {
         val saved = this.armeDao.save(nouvelle)
         redirectAttributes.addFlashAttribute("msgSuccess", "Enregistrement de ${saved.nom} réussi")
         return "redirect:/admin/arme"
     }
 
-    @GetMapping("/acteur/ressource/{id}/edit")
+    @GetMapping("/admin/arme/{id}/edit")
     fun edit(@PathVariable id: Long, model: Model): String {
-        val ressource = this.armeDao.findById(id).orElseThrow()
+        val arme = this.armeDao.findById(id).orElseThrow()
         val qualites= qualiteDao.findAll()
         val typesArmes = typeArmeDao.findAll()
         model.addAttribute("qualites",qualites)
         model.addAttribute("typesArmes",typesArmes)
-        model.addAttribute("ressource", ressource)
+        model.addAttribute("arme", arme)
         return "admin/arme/edit"
     }
 
-    @PostMapping("/acteur/ressource/update")
+    @PostMapping("/admin/arme/update")
     fun update(@ModelAttribute arme: Arme, redirectAttributes: RedirectAttributes): String {
         val armeModifier = this.armeDao.findById(arme.id ?: 0).orElseThrow()
 
@@ -69,7 +69,7 @@ class ArmeControleur(val armeDao: ArmeDao, val qualiteDao: QualiteDao, val typeA
         return "redirect:/admin/arme"
     }
 
-    @PostMapping("/acteur/ressource/delete")
+    @PostMapping("/admin/arme/delete")
     fun delete(@RequestParam id: Long, redirectAttributes: RedirectAttributes): String {
         val arme = this.armeDao.findById(id).orElseThrow()
         this.armeDao.delete(arme)
