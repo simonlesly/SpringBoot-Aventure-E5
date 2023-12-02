@@ -38,8 +38,23 @@
                         Admin
                     </a>
                     <ul class="dropdown-menu">
-                        <li><a class="dropdown-item" th:href="@{'/admin/qualite'}">Dashboard Qualite</a></li>
-                        <li><a class="dropdown-item" th:href="@{'/admin/typearme'}">Dashboard Type Arme</a></li>
+                        <li><a class="dropdown-item" th:href="@{'/admin/qualite'}">Dashboard qualite</a></li>
+                        <li><a class="dropdown-item" th:href="@{'/admin/typeArme'}">Dashboard type arme</a></li>
+                        <li><a class="dropdown-item" th:href="@{'/admin/typeArmure'}">Dashboard type armure</a></li>
+                        <li><a class="dropdown-item" th:href="@{'/admin/typeAccessoire'}">Dashboard type accessoire</a></li>
+                        <li><a class="dropdown-item" th:href="@{'/admin/arme'}">Dashboard type arme</a></li>
+                        <li><a class="dropdown-item" th:href="@{'/admin/armure'}">Dashboard type armure</a></li>
+                        <li><a class="dropdown-item" th:href="@{'/admin/accessoire'}">Dashboard type accessoire</a></li>
+                    </ul>
+                </li>
+                <li sec:authorize="hasAuthority('joueur')" class="nav-item dropdown">
+                    <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown"
+                       aria-expanded="false">
+                        Joueur
+                    </a>
+                    <ul class="dropdown-menu">
+                        <li><a class="dropdown-item" th:href="@{'/joueur/campagne'}">Mes campagnes</a></li>
+                        <li><a class="dropdown-item" th:href="@{'/joueur/personnage'}">Mes personnages</a></li>
                     </ul>
                 </li>
                 <li sec:authorize="isAnonymous()" class="nav-item">

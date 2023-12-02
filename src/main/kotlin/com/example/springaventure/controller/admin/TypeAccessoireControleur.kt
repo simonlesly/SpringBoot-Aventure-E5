@@ -13,14 +13,14 @@ class TypeAccessoireControleur (val typeAccessoireDao: TypeAccessoireDao) {
     fun index(model: Model): String {
         val typeAccessoires = this.typeAccessoireDao.findAll()
         model.addAttribute("typeAccessoires", typeAccessoires)
-        return "admin/typeAccessoire/index"
+        return "admin/typeaccessoire/index"
     }
 
     @GetMapping("/admin/typeAccessoire/{id}")
     fun show(@PathVariable id: Long, model: Model): String {
         val typeAccessoire = this.typeAccessoireDao.findById(id).orElseThrow()
         model.addAttribute("typeAccessoire", typeAccessoire)
-        return "admin/typeAccessoire/show"
+        return "admin/typeaccessoire/show"
     }
 
     @GetMapping("/admin/typeAccessoire/create")
