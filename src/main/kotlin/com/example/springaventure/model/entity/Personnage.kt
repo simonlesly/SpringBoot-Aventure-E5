@@ -8,7 +8,7 @@ open class Personnage(
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id", nullable = false)
     var id: Long? = null,
-    val nom: String,
+    var nom: String,
 
     var attaque: Int,
     var defense: Int,

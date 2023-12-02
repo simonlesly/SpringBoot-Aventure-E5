@@ -26,25 +26,31 @@ insert into item (soin, discriminateur, chemin_image, description, nom) values(2
 insert into item (nbr_des, max_des, discriminateur, description, nom) values(2, 6, 'bombe', 'Bombe explosive qui inflige des dégâts légers.', 'Bombe explosive'),(3, 8, 'bombe', 'Bombe incendiaire causant des dégâts moyens sur une zone étendue.', 'Bombe incendiaire'),(4, 10, 'bombe', 'Bombe fumigène qui obscurcit la vision et désoriente les ennemis.', 'Bombe fumigène'),(2, 4, 'bombe', 'Bombe sonore assourdissante infligeant des dégâts légers et désorientant les cibles.', 'Bombe sonore'),(3, 6, 'bombe', 'Bombe paralysante qui immobilise les ennemis pendant un court laps de temps.', 'Bombe paralysante'),(4, 8, 'bombe', 'Bombe hallucinogène provoquant des illusions chez les adversaires.', 'Bombe hallucinogène'),(3, 10, 'bombe', 'Bombe aveuglante qui provoque une cécité temporaire chez les ennemis.', 'Bombe aveuglante'),(2, 6, 'bombe', 'Bombe empoisonnée infligeant des dégâts au fil du temps.', 'Bombe empoisonnée'),(4, 12, 'bombe', 'Bombe corrosive qui cause des dégâts importants aux armures et aux structures.', 'Bombe corrosive'),(3, 8, 'bombe', 'Bombe électrique paralysant les ennemis avec des décharges électriques.', 'Bombe électrique');
 
 -- Monstre 1
-INSERT INTO personnage (nom, attaque, defense, endurance, vitesse, point_de_vie,utilisateur_id,arme_equipee_id) VALUES ('Goblin', 10, 5, 20, 15, 70,1,1);
+INSERT INTO personnage (nom, attaque, defense, endurance, vitesse, point_de_vie,utilisateur_id,arme_equipee_id,armure_equipee_id,accessoire_id) VALUES ('Goblin', 10, 5, 20, 15, 70,1,1,27,36);
 INSERT INTO ligne_inventaire (quantite, item_id, personnage_id) VALUES (1,1,1);
 -- Monstre 2
 INSERT INTO personnage (nom, attaque, defense, endurance, vitesse, point_de_vie,utilisateur_id) VALUES ('Dragon Rouge', 50, 30, 100, 40, 150,1);
 
 -- Monstre 3
-INSERT INTO personnage (nom, attaque, defense, endurance, vitesse, point_de_vie,utilisateur_id) VALUES ('Sorcier des Ombres', 25, 15, 60, 25, 100,1);
+INSERT INTO personnage (nom, attaque, defense, endurance, vitesse, point_de_vie,utilisateur_id,arme_equipee_id) VALUES ('Sorcier des Ombres', 25, 15, 60, 25, 100,1,12);
 
 -- Monstre 4
-INSERT INTO personnage (nom, attaque, defense, endurance, vitesse, point_de_vie, utilisateur_id) VALUES ('Orc Berserker', 35, 20, 80, 30, 120,1);
+INSERT INTO personnage (nom, attaque, defense, endurance, vitesse, point_de_vie, utilisateur_id,arme_equipee_id,armure_equipee_id,accessoire_id) VALUES ('Orc Berserker', 35, 20, 80, 30, 120,1,2,32,41);
 
 -- Monstre 5
-INSERT INTO personnage (nom, attaque, defense, endurance, vitesse, point_de_vie, utilisateur_id) VALUES ('Liche Maléfique', 40, 25, 90, 35, 110,1);
+INSERT INTO personnage (nom, attaque, defense, endurance, vitesse, point_de_vie, utilisateur_id,arme_equipee_id,accessoire_id) VALUES ('Liche Maléfique', 40, 25, 90, 35, 110,1,8,45);
 
 -- Monstre 6
 INSERT INTO personnage (nom, attaque, defense, endurance, vitesse, point_de_vie,utilisateur_id) VALUES ('Chimère Élémentaire', 55, 35, 120, 45, 180,1);
 -- Hero 7
 INSERT INTO personnage (nom, attaque, defense, endurance, vitesse, point_de_vie,utilisateur_id,armure_equipee_id,arme_equipee_id) VALUES ('Paladin', 37, 45, 75, 30, 110,1,28,4);
 INSERT INTO ligne_inventaire (quantite, item_id, personnage_id) VALUES (4,47,7),(1,4,7),(1,28,7);
+INSERT INTO ligne_inventaire (quantite, item_id, personnage_id) VALUES (4,47,1),(1,51,1);
+INSERT INTO ligne_inventaire (quantite, item_id, personnage_id) VALUES (3,48,2),(5,52,2);
+INSERT INTO ligne_inventaire (quantite, item_id, personnage_id) VALUES (1,12,3),(1,49,3),(5,53,3);
+INSERT INTO ligne_inventaire (quantite, item_id, personnage_id) VALUES (1,7,4),(1,2,4),(5,47,4);
+INSERT INTO ligne_inventaire (quantite, item_id, personnage_id) VALUES (1,12,5),(1,48,5);
+INSERT INTO ligne_inventaire (quantite, item_id, personnage_id) VALUES (1,18,6),(1,51,6);
 
 INSERT INTO campagne (nom, date_maj, dernier_score, meilleur_score, statut, utilisateur_id,hero_id) VALUES ('Campagne1', '2023-01-01', 0, 0, 'En cours', 1,7);
 INSERT INTO campagne (nom, date_maj, dernier_score, meilleur_score, statut, utilisateur_id,hero_id) VALUES ('Campagne2', '2023-02-01', 0, 0, 'En cours', 1,7);
