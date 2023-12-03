@@ -6,9 +6,22 @@ import jakarta.persistence.ManyToOne
 import jakarta.persistence.OneToMany
 
 
+/**
+ * Entité représentant une armure dans le système.
+ *
+ * @param id Identifiant unique de l'armure.
+ * @param nom Nom de l'armure.
+ * @param description Description de l'armure.
+ * @param cheminImage Chemin vers l'image de l'armure.
+ * @param typeArmure Type d'armure à laquelle elle appartient (relation ManyToOne).
+ * @param qualite Qualité de l'armure (relation ManyToOne).
+ */
 @Entity
 class Armure(
-    id: Long?, nom: String, description: String, cheminImage: String,
+    id: Long?,
+    nom: String,
+    description: String,
+    cheminImage: String,
     @ManyToOne
     @JoinColumn(name = "type_armure_id")
     var typeArmure: TypeArmure? = null,
@@ -17,16 +30,18 @@ class Armure(
     var qualite: Qualite? = null
 ) :
     Item(id, nom, description, cheminImage) {
+
     @OneToMany(mappedBy = "armureEquipee")
-     var personnages: MutableList<Personnage> = mutableListOf()
+    var personnages: MutableList<Personnage> = mutableListOf()
 
     /**
      * Équipe l'armure sur un personnage, permettant au personnage d'augmenter sa défense.
      *
      * @param cible Le personnage sur lequel l'armure est équipée.
+     * @return Message décrivant l'action effectuée.
      */
-    override fun utiliser(cible: Personnage):String {
-      return  cible.equipe(this)
+    override fun utiliser(cible: Personnage): String {
+        return cible.equipe(this)
     }
 
     /**
@@ -37,6 +52,4 @@ class Armure(
     override fun toString(): String {
         return "${qualite?.couleur} ${qualite?.nom} $nom ${qualite?.bonusQualite} (type=${typeArmure?.nom})"
     }
-
-
 }

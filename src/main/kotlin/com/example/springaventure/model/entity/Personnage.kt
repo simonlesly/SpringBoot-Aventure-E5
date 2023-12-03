@@ -1,7 +1,23 @@
 package com.example.springaventure.model.entity
 
 import jakarta.persistence.*
-
+/**
+ * Classe représentant un personnage du jeu.
+ *
+ * @property id Identifiant unique du personnage.
+ * @property nom Nom du personnage.
+ * @property attaque Valeur d'attaque du personnage.
+ * @property defense Valeur de défense du personnage.
+ * @property endurance Valeur d'endurance du personnage.
+ * @property vitesse Valeur de vitesse du personnage.
+ * @property armeEquipee Arme équipée par le personnage.
+ * @property armureEquipee Armure équipée par le personnage.
+ * @property accessoire Accessoire équipé par le personnage.
+ * @property utilisateur Utilisateur auquel le personnage est associé.
+ * @property combats Liste des combats auxquels le personnage a participé en tant que monstre.
+ * @property ligneInventaires Liste des objets dans l'inventaire du personnage.
+ * @property campagnes Liste des campagnes auxquelles le personnage a participé en tant que héros.
+ */
 @Entity
 open class Personnage(
     @Id
@@ -30,19 +46,25 @@ open class Personnage(
     open var utilisateur: Utilisateur? = null,
     @OneToMany(mappedBy = "hero", orphanRemoval = true)
     open var campagnes: MutableList<Campagne> = mutableListOf(),
+    @ManyToOne
+    @JoinColumn(name = "accessoire_id")
+    open var accessoire: Accessoire? = null
 ) {
 
-
+    /**
+     * Propriété calculée représentant le nombre maximal de points de vie que le personnage peut avoir.
+     */
     val pointDeVieMax: Int
         get() = 50 + (10 * (this.endurance))
+    /**
+     * Points de vie actuels du personnage. La valeur est limitée par le nombre maximal de points de vie.
+     */
     var pointDeVie: Int = this.pointDeVieMax
         set(value) {
             field = minOf(value, this.pointDeVieMax)
         }
 
-    @ManyToOne
-    @JoinColumn(name = "accessoire_id")
-    open var accessoire: Accessoire? = null
+
 
     fun calculeDefense(): Int {
         var resultat = this.defense / 2
@@ -53,7 +75,12 @@ open class Personnage(
 
     }
 
-    // Méthode pour attaquer un adversaire
+    /**
+     * Méthode permettant au personnage d'attaquer un adversaire.
+     *
+     * @param adversaire La cible de l'attaque.
+     * @return Un message décrivant le résultat de l'attaque.
+     */
     open fun attaquer(adversaire: Personnage): String {
         // Vérifier si le personnage a une arme équipée
         var degats = this.attaque / 2
@@ -86,7 +113,17 @@ open class Personnage(
         val ligneArmure = this.ligneInventaires.find({ ligneInventaire -> ligneInventaire.item == armure })
         if (ligneArmure != null) {
             this.armureEquipee = armure
-            return "${this.nom} équipe ${this.armeEquipee!!.nom}."
+            return "${this.nom} équipe ${this.armureEquipee!!.nom}."
+        } else {
+            return "$nom n'a pas cette armure dans son inventaire."
+        }
+    }
+
+    fun equipe(accessoire: Accessoire): String {
+        val ligneAccessoire = this.ligneInventaires.find({ ligneInventaire -> ligneInventaire.item == accessoire })
+        if (ligneAccessoire != null) {
+            this.accessoire = accessoire
+            return "${this.nom} équipe ${this.accessoire!!.nom}."
         } else {
             return "$nom n'a pas cette armure dans son inventaire."
         }
@@ -159,7 +196,7 @@ open class Personnage(
 
 
     /**
-     * Ajoute une ligne d'inventaire pour l'item spécifié avec la quantité donnée.
+     * Méthode permettant d'ajouter une ligne d'inventaire pour un item avec une quantité donnée.
      * Si une ligne d'inventaire pour cet item existe déjà, met à jour la quantité.
      * Si la quantité résultante est inférieure ou égale à zéro, la ligne d'inventaire est supprimée.
      *

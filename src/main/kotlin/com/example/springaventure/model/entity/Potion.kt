@@ -2,13 +2,18 @@ package com.example.springaventure.model.entity
 
 import jakarta.persistence.DiscriminatorValue
 import jakarta.persistence.Entity
-
-// Déclare la classe comme une entité JPA.
+/**
+ * Classe représentant une potion dans le jeu.
+ *
+ * @property id Identifiant unique de la potion.
+ * @property nom Nom de la potion.
+ * @property description Description de la potion.
+ * @property cheminImage Chemin vers l'image de la potion.
+ * @property soin Valeur de soin que la potion procure.
+ */
 @Entity
-// Spécifie la valeur du discriminateur associée à cette sous-classe.
 @DiscriminatorValue("potion")
 class Potion(
-    // Déclaration des propriétés de la classe Potion, héritées de la classe Item
     // L'identifiant unique de la potion
     id: Long? = null,
 
@@ -17,13 +22,13 @@ class Potion(
 
     // La description de la potion
     description: String,
-    //Chemin ver l'image
-    cheminImage:String?,
+
+    // Chemin vers l'image de la potion
+    cheminImage: String?,
 
     // La propriété spécifique à la potion, le soin qu'elle procure
     val soin: Int
-
-) : Item(id, nom, description,cheminImage) {
+) : Item(id, nom, description, cheminImage) {
 
     /**
      * Utilise l'objet de type Potion de Soin sur un personnage cible, augmentant ses points de vie.
@@ -44,6 +49,4 @@ class Potion(
         // Construire et retourner un message décrivant l'action effectuée
         return "${this.nom} soigne ${cible.nom} pour ${cible.pointDeVie - pvInitiale} PV"
     }
-
-
 }

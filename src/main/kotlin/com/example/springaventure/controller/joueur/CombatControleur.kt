@@ -16,15 +16,20 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes
 
 
 @Controller
-class CombatControleur (val combatService: CombatService, val combatDao: CombatDao, val personnageDao: PersonnageDao, val itemDao: ItemDao) {
+class CombatControleur(
+    val combatService: CombatService,
+    val combatDao: CombatDao,
+    val personnageDao: PersonnageDao,
+    val itemDao: ItemDao
+) {
 
     @GetMapping("/joueur/combat/{idCombat}")
-    fun show(@PathVariable idCombat: Long,model: Model):String{
+    fun show(@PathVariable idCombat: Long, model: Model): String {
         val combat = combatDao.findById(idCombat).orElseThrow()
         // Vérification de la fin du combat avant d'effectuer l'attaque
         if (combatService.verificationFinCombat(combat.campagne.hero!!, combat.monstre) != null) {
-            if(combat!!.campagne.hero!!.pointDeVie>0){
-                combat.estTerminer=true
+            if (combat!!.campagne.hero!!.pointDeVie > 0) {
+                combat.estTerminer = true
                 combatDao.save(combat)
             }
 
@@ -34,6 +39,7 @@ class CombatControleur (val combatService: CombatService, val combatDao: CombatD
         model.addAttribute("combat", combat)
         return "joueur/combat/index"
     }
+
     /**
      * Cette méthode gère l'attaque du héros contre une cible dans le combat.
      *
@@ -43,7 +49,11 @@ class CombatControleur (val combatService: CombatService, val combatDao: CombatD
      * @return Le nom de la vue Thymeleaf à afficher après l'attaque.
      */
     @PostMapping("/joueur/combat/{idCombat}/attaque/{idCible}")
-    fun attaquer(@PathVariable idCombat: Long, @PathVariable idCible: Long,redirectAttributes: RedirectAttributes): String {
+    fun attaquer(
+        @PathVariable idCombat: Long,
+        @PathVariable idCible: Long,
+        redirectAttributes: RedirectAttributes
+    ): String {
         // Récupération du combat avant le tour et de la cible à partir de leurs identifiants
         val combatAvantTour = combatDao.findById(idCombat).orElseThrow()
         val cible = personnageDao.findById(idCible).orElseThrow()
@@ -74,7 +84,8 @@ class CombatControleur (val combatService: CombatService, val combatDao: CombatD
         val combatAvantPotion = combatDao.findById(idCombat).orElseThrow()
 
         // Exécution de l'action "boirePotion" et récupération des messages de combat
-        val lesMessages = combatService.combattre(combatAvantPotion, combatAvantPotion.campagne.hero!!, "boirePotion", null)
+        val lesMessages =
+            combatService.combattre(combatAvantPotion, combatAvantPotion.campagne.hero!!, "boirePotion", null)
 
         // Ajout des messages et du combat au modèle pour affichage dans la vue Thymeleaf
         redirectAttributes.addFlashAttribute("messages", lesMessages)
@@ -132,16 +143,15 @@ class CombatControleur (val combatService: CombatService, val combatDao: CombatD
             // Redirection vers la page de la campagne si le combat est terminé
             return "redirect:/joueur/campagne/${combatAvantItem.campagne.id}/play"
         }
-        val cible:Personnage
-        if(idCible!=null){
+        val cible: Personnage
+        if (idCible != null) {
             // Récupération de la cible à partir de son identifiant
             cible = personnageDao.findById(idCible).orElseThrow()
-        }
-        else {
-            cible=combatAvantItem.campagne.hero!!
+        } else {
+            cible = combatAvantItem.campagne.hero!!
         }
         // Récupération de l'item à partir de son identifiant
-        val item:Item=itemDao.findById(idItem).orElseThrow()
+        val item: Item = itemDao.findById(idItem).orElseThrow()
 
         // Exécution de l'action "utiliserItem" et récupération des messages de combat
         val lesMessages = combatService.combattre(combatAvantItem, cible, "utiliserItem", item)

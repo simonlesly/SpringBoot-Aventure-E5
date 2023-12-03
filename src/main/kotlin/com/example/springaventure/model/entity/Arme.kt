@@ -1,7 +1,17 @@
 package com.example.springaventure.model.entity
 
 import jakarta.persistence.*
-
+/**
+ * Entité représentant une arme dans le système.
+ *
+ * @param id Identifiant unique de l'arme.
+ * @param nom Nom de l'arme.
+ * @param description Description de l'arme.
+ * @param cheminImage Chemin vers l'image de l'arme.
+ * @param qualite Qualité de l'arme (relation ManyToOne).
+ * @param typeArme Type d'arme auquel elle appartient (relation ManyToOne).
+ * @param personnages Liste des personnages équipant cette arme (relation OneToMany).
+ */
 @Entity
 @DiscriminatorValue("arme")
 class Arme constructor(
@@ -10,8 +20,6 @@ class Arme constructor(
     description: String,
     cheminImage: String?,
 
-    //Association entre Arme et Qualite
-    //Plusieurs armes peuvent être rataché a une qualite
     @ManyToOne
     @JoinColumn(name = "qualite_id")
     var qualite: Qualite? = null,

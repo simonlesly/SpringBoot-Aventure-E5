@@ -1,7 +1,15 @@
 package com.example.springaventure.model.entity
 
 import jakarta.persistence.*
-
+/**
+ * Entité représentant un combat dans le système.
+ *
+ * @property id Identifiant unique du combat (généré automatiquement).
+ * @property nbTour Nombre de tours joués dans le combat.
+ * @property estTerminer Indique si le combat est terminé.
+ * @property campagne Campagne associée au combat.
+ * @property monstre Monstre associé au combat.
+ */
 @Entity
 class Combat constructor(
     @Id

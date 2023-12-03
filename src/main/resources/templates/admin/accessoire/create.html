@@ -9,18 +9,18 @@
     <nav th:replace="mesFragments :: fragNav"></nav>
     <main class="container">
         <h1>Ajouter un accessoire</h1>
-        <form th:action="@{/admin/accessoire}" th:object="${nouvelleAccessoire}" method="post">
+        <form novalidate class="validation" th:action="@{/admin/accessoire}" th:object="${nouvelleAccessoire}" method="post">
             <div class="mb-3">
                 <label for="nom" class="form-label">Nom</label>
-                <input type="text" class="form-control" id="nom" th:field="${nouvelleAccessoire.nom}" required>
+                <input minlength="3" maxlength="255" type="text" class="form-control" id="nom" th:field="${nouvelleAccessoire.nom}" required>
             </div>
             <div class="mb-3">
                 <label for="description" class="form-label">Description</label>
-                <textarea class="form-control" id="description" th:field="${nouvelleAccessoire.description}" required></textarea>
+                <textarea minlength="3" maxlength="255" class="form-control" id="description" th:field="${nouvelleAccessoire.description}" required></textarea>
             </div>
             <div class="mb-3">
                 <label for="image" class="form-label">Chemin Image</label>
-                <input type="text" class="form-control" id="image" th:field="${nouvelleAccessoire.cheminImage}">
+                <input minlength="3" maxlength="255" type="text" class="form-control" id="image" th:field="${nouvelleAccessoire.cheminImage}">
             </div>
             <div class="mb-3">
                 <label for="qualite" class="form-label">Qualité</label>
@@ -42,5 +42,6 @@
     </main>
 </div>
 <footer th:replace="mesFragments :: fragFooter"></footer>
+<script src="/js/validation.js"></script>
 </body>
 </html>

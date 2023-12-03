@@ -13,8 +13,25 @@ import org.springframework.web.bind.annotation.PathVariable
 import org.springframework.web.bind.annotation.RequestParam
 
 
+/**
+ * Contrôleur responsable de la gestion des campagnes du joueur dans l'application.
+ */
 @Controller
-class CampagneControleur(val campagneDao: CampagneDao, val personnageDao: PersonnageDao) {
+class CampagneControleur(
+    /** DAO pour l'accès aux données des campagnes. */
+    val campagneDao: CampagneDao,
+    /** DAO pour l'accès aux données des personnages. */
+    val personnageDao: PersonnageDao
+) {
+
+    /**
+     * Affiche la liste des campagnes du joueur avec pagination et possibilité de recherche.
+     *
+     * @param model Modèle utilisé pour transmettre des données à la vue.
+     * @param search Terme de recherche (facultatif) pour filtrer les campagnes par nom.
+     * @param pageable Informations sur la pagination (page actuelle, nombre d'éléments par page, etc.).
+     * @return Le nom de la vue à afficher.
+     */
     @GetMapping("/joueur/campagne")
     fun index(
         model: Model,
@@ -34,13 +51,19 @@ class CampagneControleur(val campagneDao: CampagneDao, val personnageDao: Person
         }
         val lesCampagnes = campagneDao.findByNomContainingIgnoreCaseAndUtilisateur_Email(nomRechercher, email, pageable)
 
-
         model.addAttribute("campagnes", lesCampagnes)
         // Ajouter le terme de recherche au modèle pour pré-remplir le champ de recherche dans la vue
         model.addAttribute("search", search)
         return "joueur/campagne/index"
     }
 
+    /**
+     * Gère la demande de participation à une campagne en cours.
+     *
+     * @param id ID de la campagne à rejoindre.
+     * @param model Modèle utilisé pour transmettre des données à la vue.
+     * @return Redirection vers la page de combat ou la liste des campagnes.
+     */
     @GetMapping("/joueur/campagne/{id}/jouer")
     fun play(@PathVariable id: Long, model: Model): String {
         // Récupération de la campagne à partir de l'identifiant
@@ -95,5 +118,4 @@ class CampagneControleur(val campagneDao: CampagneDao, val personnageDao: Person
         // Redirection vers la page du combat
         return "joueur/combat/index"
     }
-
 }
