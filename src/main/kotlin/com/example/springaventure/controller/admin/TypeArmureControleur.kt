@@ -1,6 +1,6 @@
 package com.example.springaventure.controller.admin
 
-import com.example.springaventure.model.dao.TypeArmeDao
+
 import com.example.springaventure.model.dao.TypeArmureDao
 import com.example.springaventure.model.entity.TypeArmure
 import org.springframework.stereotype.Controller

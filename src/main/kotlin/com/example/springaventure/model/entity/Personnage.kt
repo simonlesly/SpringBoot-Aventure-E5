@@ -71,7 +71,7 @@ open class Personnage(
         val scoreArmure =
             (this.armureEquipee?.typeArmure?.bonusType ?: 0) + (this.armureEquipee?.qualite?.bonusQualite ?: 0)
         resultat += scoreArmure
-        return resultat;
+        return resultat
 
     }
 

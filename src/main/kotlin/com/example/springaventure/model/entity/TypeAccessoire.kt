@@ -21,9 +21,10 @@ class TypeAccessoire(
     var nom: String,
 
     // Type de bonus associé au type d'accessoire
-    var typeBonus: String
-) {
+    var typeBonus: String,
     // Liste des accessoires associés à ce type d'accessoire
     @OneToMany(mappedBy = "typeAccessoire", cascade = [CascadeType.REMOVE], orphanRemoval = true)
-    open var accessoires: MutableList<Accessoire> = mutableListOf()
+    var accessoires: MutableList<Accessoire> = mutableListOf()
+) {
+
 }

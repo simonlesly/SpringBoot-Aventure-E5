@@ -31,6 +31,7 @@ class CombatControleur(
             if (combat!!.campagne.hero!!.pointDeVie > 0) {
                 combat.estTerminer = true
                 combatDao.save(combat)
+                combat.campagne.hero!!.loot(combat.monstre)
             }
 
             // Redirection vers la page de la campagne si le combat est terminé
@@ -45,7 +46,7 @@ class CombatControleur(
      *
      * @param idCombat L'identifiant du combat en cours.
      * @param idCible L'identifiant de la cible du héros.
-     * @param model Le modèle Spring utilisé pour passer des données à la vue Thymeleaf.
+     * @param redirectAttributes Le modèle Spring utilisé pour passer des données à la vue Thymeleaf.
      * @return Le nom de la vue Thymeleaf à afficher après l'attaque.
      */
     @PostMapping("/joueur/combat/{idCombat}/attaque/{idCible}")
@@ -72,7 +73,7 @@ class CombatControleur(
      * Cette méthode gère l'action de boire une potion du héros dans le combat.
      *
      * @param idCombat L'identifiant du combat en cours.
-     * @param model Le modèle Spring utilisé pour passer des données à la vue Thymeleaf.
+     * @param redirectAttributes Le modèle Spring utilisé pour passer des données à la vue Thymeleaf.
      * @return Le nom de la vue Thymeleaf à afficher après avoir bu la potion.
      */
     @PostMapping("/joueur/combat/{idCombat}/boirePotion")
@@ -98,7 +99,7 @@ class CombatControleur(
      * Cette méthode gère l'action d'attendre du héros dans le combat.
      *
      * @param idCombat L'identifiant du combat en cours.
-     * @param model Le modèle Spring utilisé pour passer des données à la vue Thymeleaf.
+     * @param redirectAttributes Le modèle Spring utilisé pour passer des données à la vue Thymeleaf.
      * @return Le nom de la vue Thymeleaf à afficher après avoir attendu.
      */
     @PostMapping("/joueur/combat/{idCombat}/attendre")
