@@ -109,6 +109,7 @@
                 <configuration>
                     <args>
                         <arg>-Xjsr305=strict</arg>
+                        <target>17</target>
                     </args>
                     <compilerPlugins>
                         <plugin>spring</plugin>

@@ -29,7 +29,7 @@ class TypeArmureControleur(
         val typeArmures = this.typeArmureDao.findAll()
         // Ajoute la liste des types d'armures au modèle pour transmission à la vue
         model.addAttribute("typeArmures", typeArmures)
-        return "admin/typeArmure/index"
+        return "admin/typearmure/index"
     }
 
     /**
@@ -43,7 +43,7 @@ class TypeArmureControleur(
     fun show(@PathVariable id: Long, model: Model): String {
         val typeArmure = this.typeArmureDao.findById(id).orElseThrow()
         model.addAttribute("typeArmure", typeArmure)
-        return "admin/typeArmure/show"
+        return "admin/typearmure/show"
     }
 
     /**
@@ -56,7 +56,7 @@ class TypeArmureControleur(
     fun create(model: Model): String {
         val nouvelleTypeArmure = TypeArmure(null, "", 1)
         model.addAttribute("nouvelleTypeArmure", nouvelleTypeArmure)
-        return "admin/typeArmure/create"
+        return "admin/typearmure/create"
     }
 
     /**
@@ -87,7 +87,7 @@ class TypeArmureControleur(
     fun edit(@PathVariable id: Long, model: Model): String {
         val typeArmure = this.typeArmureDao.findById(id).orElseThrow()
         model.addAttribute("typeArmure", typeArmure)
-        return "admin/typeArmure/edit"
+        return "admin/typearmure/edit"
     }
 
     /**
